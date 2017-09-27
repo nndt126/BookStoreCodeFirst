@@ -19,7 +19,7 @@ namespace BookStoreIdentity.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        ILoginDAO _iLoginDAL = null;
+        private readonly ILoginDAO _iLoginDAL;
 
         public AccountController(ILoginDAO iLoginDAL)
         {

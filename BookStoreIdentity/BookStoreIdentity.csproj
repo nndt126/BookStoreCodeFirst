@@ -2455,6 +2455,7 @@
     <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\AngularApp.js" />
+    <Content Include="Scripts\authorService.js" />
     <Content Include="Scripts\bookService.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />

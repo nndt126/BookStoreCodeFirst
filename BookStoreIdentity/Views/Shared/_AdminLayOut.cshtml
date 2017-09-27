@@ -17,6 +17,7 @@
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/AngularApp.js"></script>
     <script src="~/Scripts/bookService.js"></script>
+    <script src="~/Scripts/authorService.js"></script>
     <script src="~/Scripts/adminFactory.js"></script>
 
     <script src="~/Content/Login/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
@@ -464,7 +465,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Logout", "Account")">
+                                
+                                <a href="~/Account/LogOff">
                                     <i class="icon-key"></i> Log Out
                                 </a>
                             </li>
@@ -474,7 +476,7 @@
                     <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                     <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                     <li class="dropdown dropdown-quick-sidebar-toggler">
-                        <a href="~/Account/Logout" class="dropdown-toggle">
+                        <a href="~/Account/LogOff" class="dropdown-toggle">
                             <i class="icon-logout"></i>
                         </a>
                     </li>
