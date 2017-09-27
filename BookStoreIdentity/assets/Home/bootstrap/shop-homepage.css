@@ -1,0 +1,51 @@
+/*!
+ * Start Bootstrap - Shop Homepage (http://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+
+body {
+    padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
+}
+
+/* Dropdown button on hover & focus */
+#navbarResponsive > ul > li > .dropdown > .dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+#navbarResponsive > ul > li > .dropdown > .dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+}
+
+#navbarResponsive > ul > li > .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+#navbarResponsive > ul > li > .dropdown > .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#navbarResponsive > ul > li > .dropdown > .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}

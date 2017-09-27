@@ -1,0 +1,24 @@
+﻿@model List<Model.ViewModel.BookAuthor>
+@{
+    ViewBag.Title = "GetAllBooks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var item in Model)
+{
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+            <a href="#"><img class="card-img-top" width="700px" height="400px" src="@Url.Content("~/assets/HinhAnhBook/" + @item.Image)" alt=""></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a href="#">@item.BookName</a>
+                </h4>
+                <h5>@item.Prices</h5>
+                <p class="card-text">@item.Description</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">@item.AuthorName</small>
+            </div>
+        </div>
+    </div>
+}

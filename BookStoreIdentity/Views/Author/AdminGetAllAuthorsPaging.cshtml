@@ -1,0 +1,174 @@
+﻿@model IEnumerable<Model.Class.Author>
+@{
+    ViewBag.Title = "AdminGetAllAuthorsPaging";
+    Layout = "~/Views/Shared/_AdminLayOut.cshtml";
+}
+
+<h2>Author Admin</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>Editable Author
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <button id="sample_editable_1_new" class="btn green" onclick="location.href='@Url.Action("Create", "Author")'">
+                                    Add New <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="btn-group pull-right">
+                                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                    Tools <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li>
+                                        <a href="#">
+                                            Print
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            Save as PDF
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            Export to Excel
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @using (Html.BeginForm("AdminGetAllAuthorsPaging", "Author", FormMethod.Get))
+                {
+                    <div class="form-group row">
+                        <div class="col-xs-2">
+                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "form-control small", placeholder = "Find by name" })
+                        </div>
+                        <input type="submit" value="Search" class="btn btn-success btn-circle" />
+                    </div>
+                }
+                <div class="table-scrollable">
+                    <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                        <thead>
+                            <tr class='warning'>
+                                <th>
+                                    @Html.ActionLink("Author Name", "AdminGetAllAuthorsPaging", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                                </th>
+                                <th>
+                                    @Html.ActionLink("Birthday", "AdminGetAllAuthorsPaging", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
+                                </th>
+                                <th>Author Image</th>
+                                <th>Is Deleted</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AuthorName)
+                                    </td>
+                                    <td>
+                                        @*@string.Format("{0:dd/M/yyyy}", @item.Birthday.Value.ToShortDateString()?null)*@
+                                        @Html.DisplayFor(modelItem => item.Birthday)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AuthorImage)
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(modelItem => item.IsDeleted, htmlAttributes: new { @id = "check_" + @item.ID, @disabled = "disabled" })
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-warning" onclick="location.href='@Url.Action("EditAuthor", new { @ID = item.ID })'">Edit</button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button id="btnDelete_@item.ID" class="btn btn-danger" onclick="ConfirmDelete(@item.ID)">Delete</button>
+                                        @*<a href="" id="Delete" class="btn btn-danger" onclick="ConfirmDelete(@item.ID)">Delete</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (ViewBag.numberOfPage > 1)
+                    {
+                        if (ViewBag.sortOrder != null)
+                        {
+                            <ul class="pager pager-listbook">
+                                <li>
+                                    <a href="~/Author/AdminGetAllAuthorsPaging/@(ViewBag.numberPage - 1 > 0 ? ViewBag.numberPage - 1 : 1)?sortOrder=@ViewBag.sortOrder">Previous</a>
+                                </li>
+                                <li><a href="~/Author/AdminGetAllAuthorsPaging/@(ViewBag.numberPage + 1 > ViewBag.numberOfPage ? ViewBag.numberOfPage : ViewBag.numberPage + 1)?sortOrder=@ViewBag.sortOrder">Next </a></li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="pager pager-listbook">
+                                <li><a href="~/Author/AdminGetAllAuthorsPaging/@(ViewBag.numberPage - 1 > 0 ? ViewBag.numberPage - 1 : 1)">Previous</a></li>
+                                <li><a href="~/Author/AdminGetAllAuthorsPaging/@(ViewBag.numberPage + 1 > ViewBag.numberOfPage ? ViewBag.numberOfPage : ViewBag.numberPage + 1)">Next </a></li>
+                            </ul>
+                        }
+                    }
+                </div>
+
+                <!-- Modal popup Delete -->
+                <input type="hidden" id="hiddenAuthorID" />
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <a href="#" class="close" data-dissmiss="modal">&times;</a>
+                                <h3 class="modal-title"> Delete</h3>
+                            </div>
+
+                            <div class="modal-body">
+                                <h4> Are you sure? You want to delete this</h4>
+                                <div style="text-align:center;display:none" id="loaderDiv">
+                                    <img src="~/Content/image/loading.gif" />
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <a href="#" class="btn btn-default" data-dissmiss="modal" onclick="CloseDialog()">Cancel</a>
+                                <a href="#" class="btn btn-success" onclick="DeleteAuthor()">Confirm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+
+<script>
+    $(window).load(function(){
+        ShowHideBtnDelete();
+    })
+</script>
+

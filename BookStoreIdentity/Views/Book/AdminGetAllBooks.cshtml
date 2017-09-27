@@ -1,0 +1,255 @@
+﻿@model IEnumerable<Model.Class.Book>
+@{
+    ViewBag.Title = "AdminGetAllBooks";
+    Layout = "~/Views/Shared/_AdminLayOut.cshtml";
+}
+
+<h2>Author Admin</h2>
+
+<div class="row" ng-controller="bookController">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>Books Admin
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a ng-click="getData()" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="sample_editable_1_filter" class="dataTables_filter form-group">
+                                <label>
+                                    <input ng-model="searchBook" type="search" class="form-control input-large input-circle" placeholder="Search by Work Title" aria-controls="sample_editable_1" >
+                                    @*<input type="search" class="form-control input-large input-circle" placeholder="Search by Work Title" aria-controls="sample_editable_1">*@
+                                </label>
+                                <button type="submit" class="btn green input-circle"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-6">
+                            <input type="hidden" required ng-model="sID" />
+                            @*<input type="hidden" />*@
+                        </div>-->
+                        <div class="col-md-6">
+                            <div class="btn-group pull-right">
+                                <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Tools <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li>
+                                        <a onClick="$('#sample_editable_1').tableExport({ type: 'png', escape: 'false' });">
+                                            Print as Image
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a onClick="$('#sample_editable_1').tableExport({ type: 'pdf', pdfFontSize: '7', escape: 'false' });">
+                                            Save as PDF
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a onClick="$('#sample_editable_1').tableExport({ type: 'excel', escape: 'false' });">
+                                            Export to Excel
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <button id="sample_editable_1_new" class="btn green" ng-click="addNew()">
+                                Add New <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                        <thead>
+                            <tr class='warning'>
+                                <th ng-click="sort('Name')">
+                                    @Html.DisplayNameFor(model => model.Name)
+                                    <span class="glyphicon sort-icon" ng-show="sortKey=='Name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                </th>
+                                <th ng-click="sort('Prices')">
+                                    @Html.DisplayNameFor(model => model.Prices)
+                                    <span class="glyphicon sort-icon" ng-show="sortKey=='Prices'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                    @*<span class="glyphicon sort-icon" ng-show="sortKey=='Image'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>*@
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Image)
+                                    @*<span class="glyphicon sort-icon" ng-show="sortKey=='Phone'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>*@
+                                </th>
+                                <th ng-click="sort('IsDeleted')">
+                                    @Html.DisplayNameFor(model => model.IsDeleted)
+                                    <span class="glyphicon sort-icon" ng-show="sortKey=='IsDeleted'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                </th>
+                                <th ng-click="sort('AuthorName')">
+                                    @Html.DisplayNameFor(model => model.Author.AuthorName)
+                                    <span class="glyphicon sort-icon" ng-show="sortKey=='AuthorName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                </th>
+                                <th>
+                                    Edit
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="data in BooksJson | orderBy:sortKey:reverse | filter : searchBook | itemsPerPage:5">
+                                <td>{{data.Name}}</td>
+                                <td>{{data.Prices}}</td>
+                                <td>{{data.Description}}</td>
+                                <td>{{data.Image}}</td>
+                                <td><input type="checkbox" disabled="disabled" ng-model="data.IsDeleted" /></td>
+                                <td>{{data.AuthorName}}</td>
+
+                                <td class="text-center">
+                                    <button class="btn btn-warning" ng-click="getBookById(data)">Edit</button>
+                                </td>
+                                @*<td><a class="edit" href="@Url.Action("EditWorks")">Edit</a></td>*@
+                                <td class="text-center"><button class="btn btn-danger" ng-disabled="data.IsDeleted" ng-click="deletedBook(data)">Delete</button></td>
+                                @*<td><a class="delete" href="@Url.Action("Xoa")">Delete</a></td>*@
+                            </tr>
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+
+    <div id="result_tr" class="form-horizontal">
+        <div class="col-md-12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i>Add or Edit Book
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form class="form-body" name="userForm" id="userForm">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                ID <span class="required">*</span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="ID" readonly="" required ng-model="data.ID" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                Name Book <span class="required">*</span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" ng-model="data.Name" name="BookName" required class="form-control" />
+                                <div ng-show="userForm.BookName.$dirty || userForm.BookName.$touched" class="alert-danger">
+                                    <div ng-show="userForm.BookName.$error.required">Name book cannot be blank</div>
+                                </div>
+                            </div>
+                            @*username.errors && (username.dirty || username.touched)*@
+                            @*<span style="color:red" ng-show="userForm.BookName.$touched  && userForm.BookName.$invalid || userForm.BookName.$untouched">*@
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                Prices <span class="required">*</span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="number" ng-model="data.Prices" name="Prices" required class="form-control" />
+                                <div ng-show="userForm.Prices.$dirty || userForm.Prices.$touched" class="alert-danger">
+                                    <div ng-show="userForm.Prices.$error.required">Price cannot be blank</div>
+                                </div>
+                            </div>
+                            @*<span style="color:red" ng-show="userForm.Prices.$touched && userForm.Prices.$invalid || userForm.Prices.$untouched">*@
+                            @*<span ng-show="userForm.Prices.$error.required" class="help-block">Price cannot be blank</span>*@
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                Image <span class="required">*</span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="file" id="UploadImg" class="form-control" /> <br />
+                                <input type="hidden" id="txtImg" ng-model="data.Image" class="form-control" />
+                                <img id="imgPreview" class="img-responsive" height="150" width="150" /> <br />
+                                <input type="button" class="btn btn-success" onclick="previewImg()" value="Preview" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                Description <span class="required">*</span>
+                            </label>
+                            <div class="col-md-4">
+                                <textarea class="form-control" ng-model="data.Description" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                Author Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-4">
+                                <select ng-model="data.AuthorID"
+                                        name="AuthorList" required class="form-control">
+                                    @*<option ng-selected="data.AuthorID == 0" value="0">Select Account</option>*@
+                                    <option ng-repeat="author in ListAuthor" ng-selected="data.AuthorID == author.ID" value="{{author.ID}}">{{author.AuthorName}}</option>
+                                </select>
+                                <div style="color:red" ng-show="userForm.AuthorList.$dirty || userForm.AuthorList.$touched" class="alert-danger">
+                                    <div ng-show="userForm.AuthorList.$error.required">Please choose Author</div>
+                                </div>
+                            </div>
+                            @*<span style="color:red" ng-show="userForm.AuthorList.$touched && userForm.AuthorList.$invalid || userForm.AuthorList.$untouched || userForm.AuthorList.$pristine ">*@
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                IsDelete <span class="required">*</span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="data.IsDeleted" ng-checked="data.IsDeleted" style="float:left; margin: 5px 0px;" />
+                            </div>
+                        </div>
+
+                        
+                    </form>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                @*<button class="btn btn-success" ng-disabled="userForm.BookName.$untouched || userForm.BookName.$touched && userForm.BookName.$invalid || userForm.Prices.$touched && userForm.Prices.$invalid || userForm.AuthorList.$touched && userForm.AuthorList.$pristine || userForm.AuthorList.$untouched" ng-click="editBook()">Save</button>*@
+                                <button class="btn btn-success" ng-disabled="!userForm.$valid" ng-click="editBook()">Save</button>
+                                <button class="btn btn-primary" ng-click="hiddenTableEdit()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END FORM-->
+                </div>
+                <!-- END VALIDATION STATES-->
+            </div>
+        </div>
+    </div>
+
+</div>

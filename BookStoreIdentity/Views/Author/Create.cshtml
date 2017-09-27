@@ -1,0 +1,83 @@
+﻿@model Model.Class.Author
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayOut.cshtml";
+}
+<div id="form_sample_3" class="form-horizontal">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formDataAuthor" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i>Add Education
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                        <a href="#portlet-config" data-toggle="modal" class="config">
+                        </a>
+                        <a href="#" class="reload">
+                        </a>
+                        <a href="javascript:;" class="remove">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AuthorName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.AuthorName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AuthorName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.TextBoxFor(model => model.Birthday, "{0:MM/dd/yyyy}", new { type = "date", @class = "form-control" })*@
+                            @*<input type='text' size="12" class="datepicker form-control form-filter" readonly id="datetimepicker1" data-date-format="dd-mm-yyyy" placeholder="Choose date" />*@
+                            @Html.TextBoxFor(model => model.Birthday, htmlAttributes: new { id = "datetimepicker1", @class = "datepicker form-control form-filter", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AuthorImage, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.HiddenFor(model => model.AuthorImage, new { id = "txtImg" })
+                            <input type="file" id="UploadImg" /> <br />
+                            @Html.ValidationMessageFor(model => model.AuthorImage, "", new { @class = "text-danger" })
+                            <img id="imgPreview" class="img-responsive" height="150" width="150" /> <br />
+                            @*<img id="imgPreview" class="img-responsive" height="150" width="150" />*@
+                            <input type="button" class="btn btn-success" onclick="previewImg()" value="Preview" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.CheckBoxFor(model => model.IsDeleted, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <input type="button" class="btn btn-primary" id="submitbtn" onclick="SaveData()" value="Submit" />
+                                <a class="btn default" href="@Url.Action("AdminGetAllAuthorsPaging","Author")">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

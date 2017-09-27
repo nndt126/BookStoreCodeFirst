@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+    @Html.AntiForgeryToken()
+        <li class="nav-item">
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Admin", routeValues: null, htmlAttributes: new { title = "Go to Admin Dasboard" })
+        </li>
+        <li class="nav-item">
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        </li>
+    }
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link" href="~/Account/Login">Login</a>
+        @*@Html.Partial("_LoginPartial")*@
+    </li>
+}
