@@ -10,6 +10,7 @@ namespace Model.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+			AutomaticMigrationDataLossAllowed = true;
             ContextKey = "Model.Class.BookStoreIdentityDbContext";
         }
 
