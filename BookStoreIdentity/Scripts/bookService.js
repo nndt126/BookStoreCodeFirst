@@ -21,7 +21,6 @@
                 var result = { isSuccess: true, data: response.data }
                 q.resolve(result);
             }, function (error) {
-                //var result = { isSuccess: false, data: error };
                 q.reject(error);
             });
             return q.promise;
@@ -54,9 +53,7 @@
             var IsConf = confirm('You are about to delete ' + data.Name + '. Are you sure?');
             if (IsConf) {
                 $http.post('/Book/DeleteBook', data).then(function (response) {
-                    //var result = { isSuccess: true, data: response.data }
                     q.resolve(response);
-
                 }, function (error) {
                     q.reject(error);
                 });
@@ -65,12 +62,5 @@
         }
 
         return service;
-
-        //function getData() {
-        //    var result = $http.get('/Book/AdminGetAllBooksJson');
-        //    return result;
-        //}
-
-        
     }
 })();

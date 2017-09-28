@@ -33,18 +33,6 @@
         }
 
         //******=========Get Single Book by ID=========******
-        function GetBookById(data) { 
-            
-            $http.get('/Book/GetBookByID/' + data.ID)
-            .then(function (result) {
-                //debugger;
-
-                $scope.data = result.data;
-                
-                //getallData();
-            }, function (error) { console.log(error) })
-        };
-
         $scope.getBookById = function (data) {
             adminFactory.ShowTableEdit();
             $("#imgPreview").removeAttr('src');
@@ -77,7 +65,6 @@
 
             var el = document.getElementById('UploadImg');
             if (el.files && el.files[0]) {
-                
                 adminFactory.SaveImage(sPath);
                 $scope.data.Image = $("#txtImg").val();
                 $('#UploadImg').val('');
